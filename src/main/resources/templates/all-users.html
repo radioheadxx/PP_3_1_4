@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>users info</title>
+    <style>
+        table {
+            width: 35%; /* Ширина таблицы */
+            background: white; /* Цвет фона таблицы */
+            color: rgba(8, 20, 59, 1); /* Цвет текста */
+            border-spacing: 1px; /* Расстояние между ячейками */
+        }
+        td, th {
+            background: rgba(116, 204, 255, 0.35); /* Цвет фона ячеек */
+            padding: 5px; /* Поля вокруг текста */
+        }
+        h1 {
+            color: rgba(8, 20, 59, 255);
+        }
+
+    </style>
+</head>
+<body>
+<br>
+<h1>All users</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    <tbody>
+    <tr th:each="user : ${allUs}">
+        <td th:utext="${user.id}"></td>
+        <td th:utext="${user.name}"></td>
+        <td th:utext="${user.surname}"></td>
+        <td th:utext="${user.email}"></td>
+        <td><a th:href="@{update{id}(id=${user.id})}">Edit</a>
+            &nbsp &nbsp &nbsp
+            <a th:href="@{delete/{id}(id=${user.id})}">Delete</a>
+        </td>
+   </tr>
+    </tbody>
+</table>
+<br>
+<button><a href="create">Create user</a></button>
+<br>
+</body>
+</html>
+
