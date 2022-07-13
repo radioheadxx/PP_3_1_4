@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>users info</title>
+    <title>Title</title>
     <style>
         table {
             width: 35%; /* Ширина таблицы */
@@ -22,7 +22,7 @@
 </head>
 <body>
 <br>
-<h1>All users</h1>
+<h1>Your information</h1>
 <table border="1">
     <tr>
         <th>Id</th>
@@ -30,25 +30,13 @@
         <th>Surname</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Actions</th>
     </tr>
-    <tbody>
-    <tr th:each="user : ${allUs}">
+    <tr>
         <td th:utext="${user.id}"></td>
         <td th:utext="${user.username}"></td>
         <td th:utext="${user.surname}"></td>
         <td th:utext="${user.email}"></td>
         <td th:utext="${user.roles}"></td>
-        <td><a th:href="@{/update/{id}(id=${user.id})}">Edit</a>
-            &nbsp &nbsp &nbsp
-            <a th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
-        </td>
-   </tr>
-    </tbody>
-</table>
-<br>
-<button><a href="/create">Create user</a></button>
-<br>
+    </tr>
 </body>
 </html>
-

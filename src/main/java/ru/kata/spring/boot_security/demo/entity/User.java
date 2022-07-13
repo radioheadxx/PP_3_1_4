@@ -3,11 +3,9 @@ package ru.kata.spring.boot_security.demo.entity;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 
 @Data
@@ -20,8 +18,8 @@ public class User implements UserDetails {
     private long id;
     @Column( nullable=false)
     private String password;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "username")
+    private String username;
     @Column(name = "surname")
     private String surname;
     @Column(name = "email", nullable=false, unique=true)
@@ -34,7 +32,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private List<Role> roles;
 
     public void addRole(Role role) {
         this.roles.add(role);
@@ -42,12 +40,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles();
     }
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
