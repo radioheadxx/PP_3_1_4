@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +31,7 @@ public class UserService implements UserDetailsService {
 
     private final PasswordEncoder bCryptPasswordEncoder ;
 
-    public UserService(UserRepository userRepository, EntityManager entityManager, RoleRepository roleRepository, PasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, EntityManager entityManager, RoleRepository roleRepository, @Lazy PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.entityManager = entityManager;
         this.roleRepository = roleRepository;
@@ -46,7 +47,6 @@ public class UserService implements UserDetailsService {
         if(userFromDB != null) {
             return false;
         }
-        user.setRoles(user.getRoles());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
@@ -63,6 +63,10 @@ public class UserService implements UserDetailsService {
             user = optionalUser.get();
         }
         return user;
+    }
+
+    public void addRole(Role role) {
+        roleRepository.save(role);
     }
 
     @Override

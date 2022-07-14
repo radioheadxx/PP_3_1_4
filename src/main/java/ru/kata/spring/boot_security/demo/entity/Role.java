@@ -2,10 +2,8 @@ package ru.kata.spring.boot_security.demo.entity;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user_roles")
@@ -19,8 +17,7 @@ public class Role implements GrantedAuthority {
     private String name;
     @Transient
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
-
+    private List<User> users;
 
     public Role() {
 
@@ -37,6 +34,13 @@ public class Role implements GrantedAuthority {
     public Role(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        if(name.equals("ROLE_USER"))
+            return "USER";
+        return  "ADMIN" ;
     }
 
     @Override
