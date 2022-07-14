@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.entity;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -16,14 +17,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column( nullable=false)
-    private String password;
+
     @Column(name = "username")
     private String username;
+
     @Column(name = "surname")
     private String surname;
-    @Column(name = "email", nullable=false, unique=true)
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
     @Transient
     private String passwordConfirm;
     @ManyToMany(fetch = FetchType.EAGER)

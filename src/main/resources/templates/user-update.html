@@ -5,12 +5,12 @@
     <title>Update user</title>
 </head>
 <body>
-<form action="#" th:action="@{/update}" th:object="${user}" method="post">
+<form action="#" th:action="@{admin/update}" th:object="${user}" method="post">
     <label for="id">ID</label>
     <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
     <br/>
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="name">
+    <label for="username">Name</label>
+    <input type="text" th:field="*{username}" id="username" placeholder="name">
     <br/>
     <label for="surname">Surname</label>
     <input type="text" th:field="*{surname}" id="surname" placeholder="surname">
@@ -18,7 +18,7 @@
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email" placeholder="email">
     <label for="email">Role</label>
-    <input type="text" th:field="*{role}" id="role" placeholder="role">
+    <input type="text" th:field="*{roles}" id="roles" placeholder="roles">
     <br/>
     <input type="submit" value="Update User">
 </form>
