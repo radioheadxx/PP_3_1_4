@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.User.*;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,12 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<Role> getAllRoles() {
+        String jpql = "from Role";
+        TypedQuery<Role> query = entityManager.createQuery(jpql, Role.class);
+        return query.getResultList();
     }
 
     public boolean saveUser(User user) {

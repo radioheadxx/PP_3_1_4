@@ -23,12 +23,16 @@ public class AdminController {
     }
 
     @GetMapping("/create")
-    public String createUserForm(User user) {
+    public String createUserForm(@ModelAttribute("user") User user) {
+        userService.saveUser(user);
         return "user-create";
     }
 
     @PostMapping("/create")
-    public String createUser(User user) {
+    public String createUser() {
+        User user = new User();
+
+
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -41,8 +45,7 @@ public class AdminController {
 
     @GetMapping("/update/{id}")
     public String updateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute(userService.findById(id));
-//        model.addAttribute(userService.get)
+        model.addAttribute("user", userService.findById(id));
         return "user-update";
     }
 
