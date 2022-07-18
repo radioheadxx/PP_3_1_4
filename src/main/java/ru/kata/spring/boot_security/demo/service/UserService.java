@@ -44,9 +44,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<Role> getAllRoles() {
-        String jpql = "from Role";
-        TypedQuery<Role> query = entityManager.createQuery(jpql, Role.class);
-        return query.getResultList();
+        return roleRepository.findAll();
     }
 
     public boolean saveUser(User user) {

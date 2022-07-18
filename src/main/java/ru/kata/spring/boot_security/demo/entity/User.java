@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-
 @Data
 @Entity
 @Table(name = "users")
