@@ -12,12 +12,6 @@ import ru.kata.spring.boot_security.demo.entity.User;
 @RequestMapping("/user")
 public class UsersController {
 
-//    private final UserService userService;
-//
-//    public UsersController(UserService userService) {
-//        this.userService = userService;
-//    }
-
     @GetMapping("")
     public String showInfoForUser(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -25,5 +19,4 @@ public class UsersController {
         model.addAttribute("user", user);
         return "info_for_user";
     }
-
 }

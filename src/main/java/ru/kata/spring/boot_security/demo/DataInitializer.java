@@ -27,7 +27,7 @@
 //        List<Role> roles = new ArrayList<>();
 //        roles.add(userRole);
 //        roles.add(adminRole);
-//        User user = new User("Ash", "Links", "wildcat@mail.com", "qwerty", roles);
+//        User user = new User("Ash", "Links", "wildcat@mail.com", "Eidji", roles);
 //        userService.saveUser(user);
 //    }
 //}

@@ -1,40 +1,31 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
-import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.core.userdetails.User.*;
-
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
 
-    private final EntityManager entityManager;
-
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
 
-    private final PasswordEncoder bCryptPasswordEncoder ;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository, EntityManager entityManager, RoleRepository roleRepository, @Lazy PasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, @Lazy PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
-        this.entityManager = entityManager;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -49,7 +40,7 @@ public class UserService implements UserDetailsService {
 
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
-        if(userFromDB != null) {
+        if (userFromDB != null) {
             return false;
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -64,14 +55,19 @@ public class UserService implements UserDetailsService {
     public User findById(Long id) {
         User user = null;
         Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
             user = optionalUser.get();
         }
         return user;
     }
 
-    public void addRole(Role role) {
-        roleRepository.save(role);
+    public List<Role> findRolesByName(String roleName) {
+        List<Role> roles = new ArrayList<>();
+        for (Role role : getAllRoles()) {
+            if (roleName.contains(role.getName()))
+                roles.add(role);
+        }
+        return roles;
     }
 
     @Override

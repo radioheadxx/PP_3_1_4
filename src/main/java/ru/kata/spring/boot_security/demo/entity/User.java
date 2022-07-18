@@ -57,10 +57,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public void addRole(Role role) {
-        this.roles.add(role);
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
