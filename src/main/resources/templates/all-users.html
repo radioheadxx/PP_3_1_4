@@ -1,55 +1,295 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+
     <meta charset="UTF-8">
     <title>users info</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
-        table {
-            width: 35%; /* Ширина таблицы */
-            background: white; /* Цвет фона таблицы */
-            color: rgba(8, 20, 59, 1); /* Цвет текста */
-            border-spacing: 1px; /* Расстояние между ячейками */
+        .navbar{
+            color: white;
         }
-        td, th {
-            background: rgba(116, 204, 255, 0.35); /* Цвет фона ячеек */
-            padding: 5px; /* Поля вокруг текста */
-        }
-        h1 {
-            color: rgba(8, 20, 59, 255);
-        }
-
     </style>
 </head>
 <body>
-<br>
-<h1>All users</h1>
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Actions</th>
-    </tr>
-    <tbody>
-    <tr th:each="user : ${allUs}">
-        <td th:utext="${user.id}"></td>
-        <td th:utext="${user.username}"></td>
-        <td th:utext="${user.surname}"></td>
-        <td th:utext="${user.email}"></td>
-        <td th:utext="${user.roles}"></td>
-        <td><a th:href="@{/admin/update/{id}(id=${user.id})}">Edit</a>
-            &nbsp &nbsp &nbsp
-            <a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
-        </td>
 
-   </tr>
-    </tbody>
-</table>
-<br>
-<button><a href="/admin/create">Create user</a></button>
-<br>
+<!--  ГЛАВНАЯ НАВИГАЦИОННАЯ ПАНЕЛЬ    -->
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div>
+            <span class="navbar-text text-white font-weight-bold"  th:text="${currentUser.getEmail()}"></span>
+            <span class="navbar-text text-white">with roles</span>
+            <span class="navbar-text text-white" th:text="${currentUser.getRolesString()}"></span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark">Logout</button>
+        </form>
+    </div>
+</nav>
+
+
+<div class="container-fluid bg-light">
+
+    <div class="row">
+        <div class="col-2 bg-white pt-3 min-vh-100 px-0">
+            <div class="container-fluid px-0">
+                <ul class="nav flex-column nav-pills ">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+<!--        Панель Админа-->
+
+        <div class="col-10">
+            <br>
+            <h1>Admin panel</h1>
+            <br>
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Users Table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#addUser">New user</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-block">
+
+                    <div class="col border bg-light">
+                        <h4 style="padding: 10px 10px 10px 15px">All users</h4>
+                    </div>
+                    <div class="container-fluid border bg-white py-3 px-4">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${allUs}">
+                            <td th:utext="${user.id}"></td>
+                            <td th:utext="${user.username}"></td>
+                            <td th:utext="${user.surname}"></td>
+                            <td th:utext="${user.age}"></td>
+                            <td th:utext="${user.email}"></td>
+                            <td th:utext="${user.getRolesString()}"></td>
+                            <td>
+                                <a type="button" class="btn btn-info" th:href="@{/admin/update/{id}(id=${user.id})}">Edit</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger delBtn" th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <button><a href="/admin/create">Create user</a></button>
+    <br>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Открыть модальное окно для редактирования</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" data-whatever="@mdo">Открыть модальное окно для удаления</button>
+
+</div>
+
+        <!--Модальное окно для редактирования-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form style="text-align: center; font-weight:bold">
+                    <div class="form-group col-8 container-sm bg-white justify-content-center">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input class="form-control" type="text" placeholder="тут должен быть текущий id" readonly id="id">
+                            </div>
+                            <div class="form-group">
+                                <label for="firstname" class="col-form-label">First name</label>
+                                <input type="text" class="form-control" id="firstname">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-form-label">Last name</label>
+                                <input type="text" class="form-control" id="lastname">
+                            </div>
+                            <div class="form-group">
+                                <label for="age" class="col-form-label">Age</label>
+                                <input type="text" class="form-control" id="age">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-form-label">Password</label>
+                                <input type="text" class="form-control" id="password">
+                            </div>
+                            <div class="form-group">
+                                <label for="role" class="col-form-label">Role</label>
+                                <input type="text" class="form-control" id="role">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!--Модальное окно для удаления-->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form style="text-align: center; font-weight:bold">
+                    <div class="form-group col-8 container-sm bg-white justify-content-center">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input class="form-control" type="text" placeholder="тут должен быть текущий id" readonly id="delId">
+                            </div>
+                            <div class="form-group">
+                                <label for="firstname" class="col-form-label">First name</label>
+                                <input type="text" class="form-control" id="delFirstname" placeholder="тут должен быть текущий first name" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-form-label">Last name</label>
+                                <input type="text" class="form-control" id="delLastname" placeholder="тут должен быть текущий last name" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="age" class="col-form-label">Age</label>
+                                <input type="text" class="form-control" id="delAge" placeholder="тут должен быть текущий age" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" id="delEmail" placeholder="тут должен быть текущий email" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="role" class="col-form-label">Role</label>
+                                <input type="text" class="form-control" id="delRole" placeholder="тут должен быть текущий role" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger delBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!--Добавление нового юзера-->
+
+<div class="col-10" id="addUser">
+    <br>
+    <h1>Admin panel</h1>
+    <br>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link " href="#">Users Table</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">New user</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-block">
+
+            <div class="col border bg-light">
+                <h4 style="padding: 10px 10px 10px 15px">Add new user</h4>
+            </div>
+            <div class="container-fluid border bg-white py-3 px-4">
+                <form style="text-align: center; font-weight:bold">
+                    <div class="form-group col-8 container-sm bg-white justify-content-center">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input class="form-control" type="text" placeholder="тут должен быть текущий id" readonly id="id">
+                            </div>
+                            <div class="form-group">
+                                <label for="firstname" class="col-form-label">First name</label>
+                                <input type="text" class="form-control" id="addFirstname">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-form-label">Last name</label>
+                                <input type="text" class="form-control" id="addLastname">
+                            </div>
+                            <div class="form-group">
+                                <label for="age" class="col-form-label">Age</label>
+                                <input type="text" class="form-control" id="addAge">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" id="addEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-form-label">Password</label>
+                                <input type="text" class="form-control" id="addPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="role" class="col-form-label">Role</label>
+                                <input type="text" class="form-control" id="addRole">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>
 

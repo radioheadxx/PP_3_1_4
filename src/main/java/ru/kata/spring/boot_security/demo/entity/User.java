@@ -3,7 +3,6 @@ package ru.kata.spring.boot_security.demo.entity;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -22,6 +21,9 @@ public class User implements UserDetails {
 
     @Column(name = "surname")
     private String surname;
+
+    @Column(name = "age")
+    private int age;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -42,19 +44,29 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String surname, String email, String password, List<Role> roles) {
+    public User(String username, String surname, int age, String email, String password, List<Role> roles) {
         this.password = password;
         this.username = username;
         this.surname = surname;
+        this.age = age;
         this.email = email;
         this.roles = roles;
     }
 
-    public User(String username, String surname, String email, String password) {
+    public User(String username, String surname, int age, String email, String password) {
         this.password = password;
         this.username = username;
         this.surname = surname;
+        this.age = age;
         this.email = email;
+    }
+
+    public String getRolesString() {
+        StringBuilder str = new StringBuilder();
+        for (Role role : roles) {
+            str.append(role + " ");
+        }
+        return str.toString();
     }
 
     @Override

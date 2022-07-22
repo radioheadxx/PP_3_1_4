@@ -5,6 +5,7 @@
 //import org.springframework.stereotype.Component;
 //import ru.kata.spring.boot_security.demo.entity.Role;
 //import ru.kata.spring.boot_security.demo.entity.User;
+//import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 //import ru.kata.spring.boot_security.demo.service.UserService;
 //
 //import javax.annotation.PostConstruct;
@@ -17,17 +18,24 @@
 //    UserService userService;
 //    @Autowired
 //    PasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    RoleRepository roleRepository;
+//
 //
 //    @PostConstruct
 //    void init() {
 //        Role userRole = new Role("ROLE_ADMIN");
 //        Role adminRole = new Role( "ROLE_USER");
-//        userService.addRole(adminRole);
-//        userService.addRole(userRole);
+//
+//        roleRepository.save(userRole);
+//        roleRepository.save(adminRole);
+//
 //        List<Role> roles = new ArrayList<>();
+//
 //        roles.add(userRole);
 //        roles.add(adminRole);
-//        User user = new User("Ash", "Links", "wildcat@mail.com", "Eidji", roles);
+//
+//        User user = new User("Ash", "Links", 18, "wildcat@mail.com", "11", roles);
 //        userService.saveUser(user);
 //    }
 //}
