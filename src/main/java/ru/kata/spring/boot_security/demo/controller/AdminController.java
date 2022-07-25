@@ -49,7 +49,7 @@ public class AdminController {
     public String updateUserForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
         model.addAttribute("roles", userService.getAllRoles());
-        return "user-update";
+        return "redirect:/admin";
     }
 
     @PostMapping("/update")
