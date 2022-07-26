@@ -21,6 +21,8 @@ public class AdminController {
     public String showAllUsers(Model model, @AuthenticationPrincipal User currentUser) {
         model.addAttribute("allUs", userService.getAllUsers());
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("roles", userService.getAllRoles());
+
         return "all-users";
     }
 
