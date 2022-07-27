@@ -108,14 +108,15 @@
                                     <td th:utext="${user.email}"></td>
                                     <td th:utext="${user.getRolesString()}"></td>
                                     <td>
-                                        <a type="button" class="btn btn-info"  th:href="@{/admin/update/{id}(id=${user.id})}" style="color: white" data-toggle="modal" data-target="#exampleModal" th:method="get">Edit</a>
+                                        <button type="button" class="btn btn-info" style="color: white" data-toggle="modal" th:data-target="${'#edit' + user.id}">Edit</button>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger delBtn" th:href="@{/admin/delete/{id}(id=${user.id})}" style="color: white" data-toggle="modal" data-target="#deleteModal">Delete</a>
+                                        <a class="btn btn-danger delBtn" th:href="@{/admin/delete/{id}(id=${user.id})}" style="color: white" data-toggle="modal" th:data-target="${'#edit' + user.id}">>Delete</a>
                                     </td>
 
                                     <!--Модальное окно для редактирования-->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                    <div class="modal fade" th:id="${'edit' + user.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -125,7 +126,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="#" style="text-align: center; font-weight:bold" th:action="@{/admin/update}" th:object="${user}" th:method="post">
+                                                    <form style="text-align: center; font-weight:bold" th:action="@{/admin/update}" th:object="${user}" th:method="post">
                                                         <div class="form-group col-8 container-sm bg-white justify-content-center">
                                                             <div class="modal-body">
                                                                 <div class="form-group">
@@ -134,59 +135,52 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="edFirstname" class="col-form-label">First name</label>
-                                                                    <input type="text" class="form-control" id="edFirstname" th:value="${user.username}">
+                                                                    <input type="text" class="form-control" id="edFirstname" th:value="${user.username}" name="username">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="edLastname" class="col-form-label">Last name</label>
-                                                                    <input type="text" class="form-control" id="edLastname" th:value="${user.surname}">
+                                                                    <input type="text" class="form-control" id="edLastname" th:value="${user.surname}" name="surname" >
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="edAge" class="col-form-label">Age</label>
-                                                                    <input type="text" class="form-control" id="edAge" th:value="${user.age}">
+                                                                    <input type="text" class="form-control" id="edAge" th:value="${user.age}" name="age">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="edEmail" class="col-form-label">Email</label>
-                                                                    <input type="text" class="form-control" id="edEmail" th:value="${user.email}">
+                                                                    <input type="text" class="form-control" id="edEmail" th:value="${user.email}" name="email">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="edPassword" class="col-form-label">Password</label>
-                                                                    <input type="text" class="form-control" id="edPassword">
+                                                                    <input type="text" class="form-control" id="edPassword" name="password">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <strong><label for="edRole">Role</label></strong>
+                                                                    <strong><label for="editRole">Role</label></strong>
                                                                     <select multiple class="custom-select w-100"
-                                                                            size="2" id="edRole" name="edRole">
+                                                                            size="2" id="editRole" name="role">
                                                                         <option
                                                                                 th:each="role : ${roles}"
                                                                                 th:text="${role.getName()}"
                                                                                 th:value="${role.name}">
                                                                         </option>
                                                                     </select>
-                                                                    <!--                                <label for="edRole" class="col-form-label">Role</label>-->
-                                                                    <!--                                <input type="text" class="form-control" id="edRole">-->
-
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <input type="submit" class="btn btn-primary" value="Edit">
+                                                        </div>
                                                     </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Edit</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
 
 <!--        Добавление нового юзера-->

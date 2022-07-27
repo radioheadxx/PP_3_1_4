@@ -18,46 +18,40 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String showAllUsers(Model model, @AuthenticationPrincipal User currentUser) {
+    public String showAllUsers(Model model, @AuthenticationPrincipal User currentUser) { 
         model.addAttribute("allUs", userService.getAllUsers());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("roles", userService.getAllRoles());
-
-        return "all-users";
-    }
-
-    @GetMapping("/create")
-    public String createUserForm(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("roles", userService.getAllRoles());
-        return "user-create";
-    }
-
-    @PostMapping("/create")
-    public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
-        user.setRoles(userService.findRolesByName(role));
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        userService.deleteUserById(id);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/update/{id}")
-    public String updateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        model.addAttribute("roles", userService.getAllRoles());
-        return "redirect:/admin";
+        return "all_users";
     }
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
         user.setRoles(userService.findRolesByName(role));
-        userService.saveUser(user);
+        userService.update(user);
         return "redirect:/admin";
     }
+
+//    @GetMapping("/create")
+//    public String createUserForm(Model model) {
+//        User user = new User();
+//        model.addAttribute("user", user);
+//        model.addAttribute("roles", userService.getAllRoles());
+//        return "user-create";
+//    }
+//
+//    @PostMapping("/create")
+//    public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
+//        user.setRoles(userService.findRolesByName(role));
+//        userService.saveUser(user);
+//        return "redirect:/admin";
+//    }
+//
+//    @GetMapping("/delete/{id}")
+//    public String deleteUser(@PathVariable("id") Long id) {
+//        userService.deleteUserById(id);
+//        return "redirect:/admin";
+//    }
+
+
 }
