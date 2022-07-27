@@ -18,7 +18,7 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String showAllUsers(Model model, @AuthenticationPrincipal User currentUser) { 
+    public String showAllUsers(Model model, @AuthenticationPrincipal User currentUser) {
         model.addAttribute("allUs", userService.getAllUsers());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("roles", userService.getAllRoles());
@@ -40,18 +40,18 @@ public class AdminController {
 //        return "user-create";
 //    }
 //
-//    @PostMapping("/create")
-//    public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
-//        user.setRoles(userService.findRolesByName(role));
-//        userService.saveUser(user);
-//        return "redirect:/admin";
-//    }
-//
-//    @GetMapping("/delete/{id}")
-//    public String deleteUser(@PathVariable("id") Long id) {
-//        userService.deleteUserById(id);
-//        return "redirect:/admin";
-//    }
+    @PostMapping("/create")
+    public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
+        user.setRoles(userService.findRolesByName(role));
+        userService.saveUser(user);
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUserById(id);
+        return "redirect:/admin";
+    }
 
 
 }
