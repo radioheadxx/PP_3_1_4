@@ -71,10 +71,10 @@
                 <div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#showUsers" onclick="return show('showUsers','addUser');">Users Table</a>
+                            <a class="nav-link active" onclick="return show('showUsers','addUser');">Users Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#addUser" onclick="return show('addUser','showUsers');">New user</a>
+                            <a class="nav-link"  onclick="return show('addUser','showUsers');">New user</a>
                         </li>
                     </ul>
                 </div>
@@ -158,12 +158,13 @@
                                                                     <select multiple class="custom-select w-100"
                                                                             size="2" id="editRole" name="role">
                                                                         <option
-                                                                                th:each="role : ${roles}"
+                                                                                th:each="role : ${rolesList}"
                                                                                 th:text="${role.getName()}"
                                                                                 th:value="${role.name}">
                                                                         </option>
                                                                     </select>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -216,12 +217,13 @@
                                                                     <select multiple class="custom-select w-100"
                                                                             size="2" id="delRole" name="role" disabled>
                                                                         <option
-                                                                                th:each="role : ${roles}"
+                                                                                th:each="role : ${rolesList}"
                                                                                 th:text="${role.getName()}"
                                                                                 th:value="${role.name}">
                                                                         </option>
                                                                     </select>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -241,9 +243,7 @@
                     </div>
                 </div>
             </div>
-
 <!--        Добавление нового юзера-->
-
         <div class="container-fluid" id="addUser" style="display: none">
             <br>
             <h1>Admin panel</h1>
@@ -251,10 +251,10 @@
             <div>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" href="#showUsers" onclick="return show('showUsers','addUser');">Users Table</a>
+                        <a class="nav-link" onclick="return show('showUsers','addUser');">Users Table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#addUser" onclick="return show('addUser','showUsers');">New user</a>
+                        <a class="nav-link active" onclick="return show('addUser','showUsers');">New user</a>
                     </li>
                 </ul>
             </div>
@@ -266,43 +266,43 @@
                         <h4 style="padding: 10px 10px 10px 15px">Add new user</h4>
                     </div>
                     <div class="container-fluid border bg-white py-3 px-4">
-                        <form style="text-align: center; font-weight:bold" th:action="${admin/create}" th:object="${user}" th:method="post">
+                        <form th:action="@{/admin/create}" th:object="${newUser}" th:method="post" style="text-align: center; font-weight:bold">
                             <div class="form-group col-4 container-sm bg-white justify-content-center">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="addFirstname" class="col-form-label">First name</label>
-                                        <input type="text" class="form-control" id="addFirstname" th:field="*{username}" >
+                                        <label for="username" class="col-form-label">First name</label>
+                                        <input type="text" class="form-control" th:field="*{username}" id="username" name="username" placeholder="First name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addLastname" class="col-form-label">Last name</label>
-                                        <input type="text" class="form-control" id="addLastname" th:field="*{surname}">
+                                        <label for="surname" class="col-form-label">Last name</label>
+                                        <input type="text" class="form-control" th:field="*{surname}" id="surname" name="surname">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addAge" class="col-form-label">Age</label>
-                                        <input type="text" class="form-control" id="addAge" th:field="*{age}">
+                                        <label for="age" class="col-form-label">Age</label>
+                                        <input type="number" class="form-control" th:field="*{age}" id="age" name="age">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addEmail" class="col-form-label">Email</label>
-                                        <input type="text" class="form-control" id="addEmail" th:field="*{email}">
+                                        <label for="email" class="col-form-label">Email</label>
+                                        <input type="text" class="form-control" th:field="*{email}" id="email" name="email">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addPassword" class="col-form-label">Password</label>
-                                        <input type="text" class="form-control" id="addPassword" th:field="*{password}">
+                                        <label for="password" class="col-form-label">Password</label>
+                                        <input type="text" class="form-control" th:field="*{password}" id="password" name="password">
                                     </div>
                                     <div class="form-group">
-                                        <strong><label for="addRole">Role</label></strong>
+                                        <strong><label for="role">Role</label></strong>
                                         <select multiple class="custom-select w-100"
-                                                size="2" id="addRole" th:field="*{role}">
+                                                size="2" id="role" name="role">
                                             <option
-                                                    th:each="role : ${roles}"
+                                                    th:each="role : ${rolesList}"
                                                     th:text="${role.getName()}"
                                                     th:value="${role.name}">
                                             </option>
                                         </select>
                                     </div>
-                                    <input type="submit" class="btn btn-success" value="Add new user">
                                 </div>
                             </div>
+                            <input type="submit" class="btn btn-success" value="Add new user">
                         </form>
                     </div>
                 </div>
