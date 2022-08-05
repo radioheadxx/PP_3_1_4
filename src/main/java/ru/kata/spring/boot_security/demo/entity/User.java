@@ -1,12 +1,17 @@
 package ru.kata.spring.boot_security.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name = "users")
@@ -41,8 +46,8 @@ public class User implements UserDetails {
     )
     private List<Role> roles;
 
-    public User() {
-    }
+//    public User() {
+//    }
 
     public User(String username, String surname, int age, String email, String password, List<Role> roles) {
         this.password = password;
