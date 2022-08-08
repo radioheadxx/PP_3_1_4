@@ -21,13 +21,19 @@ async function getUsers() {
                             temp += "<td>" + user.age + "</td>";
                             temp += "<td>" + user.email + "</td>";
                             temp += `<td>${user.roles.map(roles => roles.name === 'ROLE_USER' ? 'USER' : 'ADMIN')}</td>`;
-                            temp += `<td><button type="button" class="btn btn-info" style="color: white" data-toggle="modal" data-action="edit" data-userid="${user.id}" data-target="#editModal">Edit</button></td>`
-                            temp += `<td><button type="button" class="btn btn-danger" style="color: white" data-toggle="modal" data-userid="${user.id}" data-action="delete" data-target="#deleteModal" >Delete</button></td></tr>`
+                            temp += `<td><button type="button" class="btn btn-info" style="color: white" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-userId=${user.id} data-bs-userName=${user.username} data-bs-userSurname=${user.surname} data-bs-userAge=${user.age} data-bs-userEmail=${user.email} data-bs-userEmail=${user.roles} data-bs-userEmail=${user.password}>Edit</button></td>`
+                            temp += `<td><button type="button" class="btn btn-danger" style="color: white" 
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                                                data-bs-userId=${user.id} data-bs-userName=${user.username} 
+                                                data-bs-userSurname=${user.surname} data-bs-userAge=${user.age} 
+                                                data-bs-userEmail=${user.email}>Delete</button></td></tr>`
+                            console.log("from get user " + user.username)
                         })
 
                         //close for loop
 
                         document.getElementById('data').innerHTML = temp;
+
                     }
                 }
             )
@@ -35,27 +41,27 @@ async function getUsers() {
 
     // обрабатываем нажатие на кнопку edit
     // достаем из нее данные и отдаем модалке, которую к тому же открываем
-    $("#mainTableWithUsers").find('button').on('click', (event) => {
-        let editModal = $('#editModal');
-        let targetButton = $(event.target);
-        let buttonUserId = targetButton.attr('data-userid');
-        let buttonAction = targetButton.attr('data-action');
-
-        editModal.attr('data-userid', buttonUserId);
-        editModal.attr('data-action', buttonAction);
-        editModal.modal('show');
-    })
+    // $("#mainTableWithUsers").find('button').on('click', (event) => {
+    //     let editModal = $('#editModal');
+    //     let targetButton = $(event.target);
+    //     let buttonUserId = targetButton.attr('data-userid');
+    //     let buttonAction = targetButton.attr('data-action');
+    //
+    //     editModal.attr('data-userid', buttonUserId);
+    //     editModal.attr('data-action', buttonAction);
+    //     editModal.modal('show');
+    // })
 
     // обрабатываем нажатие на кнопку delete
 
-    $("#mainTableWithUsers").find('button').on('click', (event) => {
-        let deleteModal = $('#deleteModal');
-        let targetButton = $(event.target);
-        let buttonUserId = targetButton.attr('data-userid');
-        let buttonAction = targetButton.attr('data-action');
-
-        deleteModal.attr('data-userid', buttonUserId);
-        deleteModal.attr('data-action', buttonAction);
-        deleteModal.modal('show');
-    })
+    // $("#mainTableWithUsers").find('button').on('click', (event) => {
+    //     let deleteModal = $('#deleteModal');
+    //     let targetButton = $(event.target);
+    //     let buttonUserId = targetButton.attr('data-userid');
+    //     let buttonAction = targetButton.attr('data-action');
+    //
+    //     deleteModal.attr('data-userid', buttonUserId);
+    //     deleteModal.attr('data-action', buttonAction);
+    //     deleteModal.modal('show');
+    // })
 }

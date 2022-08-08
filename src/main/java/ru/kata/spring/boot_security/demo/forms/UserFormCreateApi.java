@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 @Builder
 public class UserFormCreateApi {
-    private Long id;
+    private long id;
     private String username;
     private String surname;
     private String email;

@@ -60,8 +60,18 @@ public class MyRestController {
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user) {
-        userService.update(user);
+    public UserFormCreateApi updateUser(@RequestBody UserFormCreateApi user) {
+        User newUser = User.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .surname(user.getSurname())
+                .email(user.getEmail())
+                .age(user.getAge())
+                .password(user.getPassword())
+                .build();
+        newUser.setRoles(userService.findRolesByName(user.getRoles()));
+        System.out.println("---------------------------------------------"+newUser);
+        userService.update(newUser);
         return user;
     }
     @DeleteMapping("/{id}")
