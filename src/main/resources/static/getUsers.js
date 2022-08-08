@@ -1,6 +1,5 @@
 
 //  вывод в таблицу
-
 async function getUsers() {
 
     fetch("/api")

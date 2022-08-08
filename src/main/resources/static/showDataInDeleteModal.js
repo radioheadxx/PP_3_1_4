@@ -3,10 +3,11 @@
 const deleteModal = document.getElementById('deleteModal')
 
 let button
+let idFromButton
 
 deleteModal.addEventListener('show.bs.modal', event => {
     button = event.relatedTarget
-    const deleteUserId = button.getAttribute('data-bs-userId')
+    idFromButton = button.getAttribute('data-bs-userId')
     const deleteUserName = button.getAttribute('data-bs-userName')
     const deleteUserSurname = button.getAttribute('data-bs-userSurname')
     const deleteUserAge = button.getAttribute('data-bs-userAge')
@@ -21,7 +22,7 @@ deleteModal.addEventListener('show.bs.modal', event => {
     const deleteModalUserAge = deleteModal.querySelector('#delAge')
     const deleteModalUserEmail = deleteModal.querySelector('#delEmail')
 
-    deleteModalUserId.value = deleteUserId
+    deleteModalUserId.value = idFromButton
     deleteModalUserName.value = deleteUserName
     deleteModalUserSurname.value = deleteUserSurname
     deleteModalUserAge.value = deleteUserAge

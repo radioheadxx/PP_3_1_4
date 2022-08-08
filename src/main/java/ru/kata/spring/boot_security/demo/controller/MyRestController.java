@@ -30,18 +30,6 @@ public class MyRestController {
         return userService.findById(id);
     }
 
-//    @PostMapping
-//    public User createNewUser(@RequestBody User user) {
-//        System.out.println();
-//        System.out.println();
-//        System.out.println( "Мой юзер ----------------------------- " + user);
-//        System.out.println();
-//        System.out.println();
-////        user.setRoles(userService.findRolesByName(user.getRoles()));
-//        userService.saveUser(user);
-//        return user;
-//    }
-
     @PostMapping()
     public UserFormCreateApi createNewUser(@RequestBody UserFormCreateApi user) {
 
@@ -54,7 +42,6 @@ public class MyRestController {
                 .build();
 
         newUser.setRoles(userService.findRolesByName(user.getRoles()));
-        System.out.println("---------------------------------------------"+newUser);
         userService.saveUser(newUser);
         return user;
     }
@@ -70,7 +57,6 @@ public class MyRestController {
                 .password(user.getPassword())
                 .build();
         newUser.setRoles(userService.findRolesByName(user.getRoles()));
-        System.out.println("---------------------------------------------"+newUser);
         userService.update(newUser);
         return user;
     }

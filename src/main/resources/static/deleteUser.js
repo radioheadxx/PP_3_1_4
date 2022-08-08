@@ -1,13 +1,10 @@
 const deleteModalForm = document.querySelector('.deleteModalForm')
-const id = button.getAttribute('data-bs-userId')
-console.log("ща мы удалим юзера с этим айди " + id)
-
 deleteModalForm.addEventListener('submit', e => {
     e.preventDefault();
 
-    fetch('api/' + id, {
+    fetch('api/' + idFromButton, {
         method: 'DELETE',
-        })
-    }).then(()=> getUsers())
+        }).then(()=> getUsers())
     $("#deleteModal").modal("hide");
-    deleteModalForm.reset()
+    deleteModalForm.reset();
+    })
